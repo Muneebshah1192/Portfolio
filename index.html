@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -10,7 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Space+Grotesk:wght@500;600;700&display=swap');
     
     :root {
       --neon-cyan: #00f3ff;
@@ -19,30 +20,24 @@
     
     body {
       font-family: 'Space Grotesk', sans-serif;
-      background: #0a0a0a;
+      background: linear-gradient(180deg, #0f172a 0%, #1e2937 100%);
     }
     
-    .neon-text {
-      text-shadow: 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan);
-    }
-    
-    .neon-violet {
-      text-shadow: 0 0 15px var(--neon-violet), 0 0 30px var(--neon-violet);
-    }
+    .neon-text { text-shadow: 0 0 20px #00f3ff, 0 0 40px #00f3ff, 0 0 60px #c724ff; }
+    .neon-violet { text-shadow: 0 0 20px #c724ff, 0 0 40px #c724ff; }
     
     .glass {
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(0, 243, 255, 0.2);
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(0, 243, 255, 0.25);
     }
     
     .glass-card {
-      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     }
-    
     .glass-card:hover {
-      transform: translateY(-12px) scale(1.03);
-      box-shadow: 0 0 60px -15px var(--neon-cyan);
+      transform: translateY(-15px) scale(1.04);
+      box-shadow: 0 0 70px -10px var(--neon-cyan);
     }
     
     .terminal-input {
@@ -54,561 +49,498 @@
       caret-color: #00f3ff;
     }
     
-    .scan-line {
-      position: absolute;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #00f3ff, transparent);
-      box-shadow: 0 0 20px #00f3ff;
-      animation: scan 4s linear infinite;
+    .skill-ring {
+      transition: stroke-dashoffset 2s ease;
     }
     
-    @keyframes scan {
-      0% { top: -10px; }
-      100% { top: 100%; }
-    }
-    
-    #three-container {
+    #robot-container {
       pointer-events: none;
+      z-index: 30;
+    }
+    
+    .timeline-dot {
+      box-shadow: 0 0 25px #00f3ff;
     }
   </style>
 </head>
-<body class="bg-black text-white overflow-x-hidden">
+<body class="text-white overflow-x-hidden">
+
   <!-- STICKY NAV -->
-  <nav class="fixed top-0 left-0 right-0 z-50 glass py-5 border-b border-cyan-500/10">
-    <div class="max-w-7xl mx-auto px-8 flex justify-between items-center">
+  <nav class="fixed top-0 left-0 right-0 z-50 glass py-5 border-b border-cyan-400/30">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center text-xs font-bold">SM</div>
-        <div class="text-2xl font-bold tracking-tighter neon-text">MUNEEB<span class="text-violet-400">.</span></div>
+        <div class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-violet-500 rounded-2xl flex items-center justify-center text-xl font-bold shadow-lg">SM</div>
+        <div class="text-3xl font-bold tracking-tighter neon-text">MUNEEB<span class="text-violet-400">.</span></div>
       </div>
-      <div class="flex gap-10 text-sm uppercase tracking-[3px] font-medium">
-        <a href="#experience" class="hover:text-cyan-400 transition-colors duration-300">EXPERIENCE</a>
-        <a href="#projects" class="hover:text-cyan-400 transition-colors duration-300">PROJECTS</a>
-        <a href="#skills" class="hover:text-cyan-400 transition-colors duration-300">SKILLS</a>
-        <a href="#contact" class="hover:text-cyan-400 transition-colors duration-300">CONTACT</a>
+      <div class="hidden md:flex gap-10 text-sm font-medium tracking-widest">
+        <a href="#experience" class="hover:text-cyan-400 transition">EXPERIENCE</a>
+        <a href="#projects" class="hover:text-cyan-400 transition">PROJECTS</a>
+        <a href="#skills" class="hover:text-cyan-400 transition">SKILLS</a>
+        <a href="#contact" class="hover:text-cyan-400 transition">CONTACT</a>
       </div>
-      <div class="flex items-center gap-6 text-cyan-400">
-        <a href="https://github.com/SyedMuneebHaiderShah" target="_blank" class="hover:scale-125 transition-transform"><i class="fa-brands fa-github text-2xl"></i></a>
-        <a href="https://linkedin.com/in/yourprofile" target="_blank" class="hover:scale-125 transition-transform"><i class="fa-brands fa-linkedin text-2xl"></i></a>
+      <div class="flex gap-6 text-2xl">
+        <a href="https://github.com/Muneebshah1192" target="_blank" class="hover:text-cyan-400 transition"><i class="fa-brands fa-github"></i></a>
+        <a href="https://linkedin.com/in/syed-muneeb-629648284" target="_blank" class="hover:text-cyan-400 transition"><i class="fa-brands fa-linkedin"></i></a>
       </div>
     </div>
   </nav>
 
   <!-- HERO -->
-  <section id="hero" class="min-h-screen relative flex items-center overflow-hidden">
-    <!-- THREE.JS NEURAL NETWORK BACKGROUND -->
-    <div id="three-container" class="absolute inset-0 z-0"></div>
+  <section id="hero" class="min-h-screen relative flex items-center pt-20">
+    <!-- Background Neural Network -->
+    <div id="neural-bg" class="absolute inset-0 z-0"></div>
     
-    <!-- PARALLAX CODE OVERLAY -->
-    <div class="absolute inset-0 z-10 opacity-10 pointer-events-none" style="background: repeating-linear-gradient(transparent, transparent 50px, rgba(0,243,255,0.03) 51px);"></div>
-    
-    <div class="max-w-6xl mx-auto px-8 relative z-20 pt-20">
+    <!-- Floating 3D Robot (right side) -->
+    <div id="robot-container" class="absolute right-10 top-1/3 hidden lg:block w-72 h-96 z-10"></div>
+
+    <div class="max-w-6xl mx-auto px-6 relative z-20">
       <div class="max-w-3xl">
-        <div class="inline-flex items-center gap-3 bg-black/60 px-6 py-2 rounded-3xl border border-cyan-400/30 mb-8">
-          <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-          <span class="text-xs uppercase tracking-widest font-mono text-cyan-300">CHAKWAL, PAKISTAN • LIVE TRANSMISSION</span>
+        <div class="inline-flex items-center gap-4 bg-black/50 px-8 py-3 rounded-3xl border border-cyan-400/40">
+          <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+          <span class="font-mono text-sm tracking-[3px] text-cyan-300">CHAKWAL, PAKISTAN • LIVE AI TRANSMISSION</span>
         </div>
         
-        <h1 class="text-[92px] leading-[0.95] font-bold tracking-[-6px] neon-text">
+        <h1 class="text-7xl md:text-8xl font-bold leading-none tracking-tighter neon-text mt-6">
           SYED MUNEEB<br>HAIDER SHAH
         </h1>
         
-        <div class="mt-6 text-4xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-violet-300 h-16" id="typewriter"></div>
+        <div id="typewriter" class="mt-8 text-4xl md:text-5xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-violet-300 to-cyan-300 h-16"></div>
         
-        <p class="mt-8 max-w-lg text-lg text-gray-300">
-          AI Engineer • Automation Architect • Cybersecurity Researcher<br>
-          Building intelligent systems that shape tomorrow.
+        <p class="mt-8 text-xl text-slate-300 max-w-lg">
+          IT Student • AI Automation Engineer • Full-Stack Developer<br>
+          University of Chakwal | Passionate about building the future
         </p>
         
-        <div class="mt-12 flex gap-5">
-          <a href="#projects" 
-             class="group px-10 py-6 bg-transparent border-2 border-cyan-400 hover:bg-cyan-400 hover:text-black text-cyan-400 font-medium text-lg rounded-2xl transition-all flex items-center gap-4">
-            ENTER THE MATRIX
-            <span class="text-2xl group-hover:rotate-45 transition-transform">→</span>
+        <div class="mt-12 flex flex-wrap gap-6">
+          <a href="#projects" class="px-12 py-6 bg-gradient-to-r from-cyan-400 to-violet-500 text-black font-semibold text-lg rounded-3xl hover:scale-105 transition flex items-center gap-4">
+            EXPLORE PROJECTS
+            <span class="text-3xl">→</span>
           </a>
-          <a href="#contact" 
-             class="px-10 py-6 border border-violet-400/70 hover:border-violet-400 text-violet-300 font-medium text-lg rounded-2xl transition-all">
-            TRANSMIT MESSAGE
-          </a>
+          <a href="#contact" class="px-12 py-6 border-2 border-violet-400 text-violet-300 font-medium text-lg rounded-3xl hover:bg-violet-400 hover:text-black transition">SEND TRANSMISSION</a>
         </div>
       </div>
     </div>
 
-    <!-- SCROLL PROMPT -->
-    <div class="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-30">
-      <div class="text-[10px] tracking-[4px] font-mono text-cyan-400/70">SCROLL TO ACTIVATE NEURAL LINK</div>
-      <div class="w-px h-16 bg-gradient-to-b from-transparent via-cyan-400 to-transparent"></div>
+    <div class="absolute bottom-12 left-1/2 text-cyan-300 text-xs font-mono tracking-widest flex flex-col items-center">
+      <div>SCROLL TO ACTIVATE HOLO-ROBOT</div>
+      <div class="w-px h-12 bg-gradient-to-b from-transparent via-cyan-400 to-transparent mt-4"></div>
     </div>
-
-    <!-- HOLOGRAPHIC DRONE INDICATOR -->
-    <div id="drone-indicator" class="absolute right-12 bottom-1/3 text-[10px] font-mono text-violet-400/60 rotate-90 tracking-widest">HOLO-DRONE ACTIVE • SCROLL TO FLY</div>
   </section>
 
-  <!-- EXPERIENCE TIMELINE -->
-  <section id="experience" class="py-32 relative bg-black/90 border-t border-b border-cyan-500/10">
-    <div class="max-w-5xl mx-auto px-8">
-      <div class="flex justify-between items-baseline mb-16">
-        <h2 class="text-6xl font-bold neon-text">EXPERIENCE LOG</h2>
-        <div class="text-cyan-400 text-sm font-mono tracking-widest">2023 — 2025</div>
-      </div>
+  <!-- EXPERIENCE - Elegant Timeline -->
+  <section id="experience" class="py-28 bg-slate-950/80">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-6xl font-bold neon-text text-center mb-16">EXPERIENCE LOG</h2>
       
-      <div class="space-y-24 relative before:absolute before:left-8 before:top-12 before:bottom-12 before:w-px before:bg-gradient-to-b before:from-cyan-400/30 before:to-violet-400/30">
+      <div class="space-y-16 relative before:absolute before:left-1/2 before:top-0 before:bottom-0 before:w-px before:bg-gradient-to-b before:from-cyan-400/30 before:to-violet-400/30 hidden md:block">
         
         <!-- Intern 1 -->
-        <div class="grid grid-cols-12 gap-12 relative">
-          <div class="col-span-12 md:col-span-5">
+        <div class="grid grid-cols-2 gap-12 items-center">
+          <div class="text-right">
             <div class="glass p-8 rounded-3xl glass-card">
-              <div class="flex justify-between text-sm mb-6">
-                <span class="font-mono text-violet-400">SYNTAXXHUB + CODEALPHA</span>
-                <span class="text-gray-400">2024</span>
-              </div>
-              <h3 class="text-3xl font-semibold mb-3">Artificial Intelligence Intern</h3>
-              <ul class="space-y-3 text-gray-300 text-lg">
-                <li class="flex gap-3"><span class="text-cyan-400">→</span> Built Rule-Based Medical Expert System (95% diagnostic accuracy)</li>
-                <li class="flex gap-3"><span class="text-cyan-400">→</span> Developed AI Music Generator using LSTM + MIDI</li>
+              <div class="font-mono text-violet-400 text-sm">CODEALPHA + SYNTAXXHUB • 2024</div>
+              <h3 class="text-3xl font-bold mt-3">Artificial Intelligence Intern</h3>
+              <ul class="mt-6 space-y-4 text-slate-300">
+                <li class="flex items-start gap-4"><span class="text-2xl text-cyan-400">→</span> Built Rule-Based Medical Expert System (Syntecxhub)</li>
+                <li class="flex items-start gap-4"><span class="text-2xl text-cyan-400">→</span> Developed AI FAQ Chatbot using NLP pipelines</li>
               </ul>
             </div>
           </div>
-          <div class="hidden md:block col-span-2 text-center">
-            <div class="w-8 h-8 rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-500 mx-auto mt-10"></div>
-          </div>
-          <div class="col-span-12 md:col-span-5 text-gray-400 text-lg leading-relaxed pt-12">
-            Leveraged Python, TensorFlow and rule-based logic to create production-ready AI tools for healthcare and creative industries.
+          <div class="flex justify-center">
+            <div class="timeline-dot w-6 h-6 bg-cyan-400 rounded-full"></div>
           </div>
         </div>
-
+        
         <!-- Intern 2 -->
-        <div class="grid grid-cols-12 gap-12 relative">
-          <div class="col-span-12 md:col-span-5 text-gray-400 text-lg leading-relaxed pt-12 md:text-right">
-            Optimized deep learning models for edge deployment. Reduced inference time by 68% through quantization and pruning.
+        <div class="grid grid-cols-2 gap-12 items-center">
+          <div class="flex justify-center">
+            <div class="timeline-dot w-6 h-6 bg-cyan-400 rounded-full"></div>
           </div>
-          <div class="hidden md:block col-span-2 text-center">
-            <div class="w-8 h-8 rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-500 mx-auto mt-10"></div>
-          </div>
-          <div class="col-span-12 md:col-span-5">
+          <div>
             <div class="glass p-8 rounded-3xl glass-card">
-              <div class="flex justify-between text-sm mb-6">
-                <span class="font-mono text-violet-400">HEXSOFTWARES</span>
-                <span class="text-gray-400">2024</span>
-              </div>
-              <h3 class="text-3xl font-semibold mb-3">Machine Learning Intern</h3>
-              <p class="text-gray-300">Model optimization &amp; deployment specialist</p>
+              <div class="font-mono text-violet-400 text-sm">HEXSOFTWARES • 2024</div>
+              <h3 class="text-3xl font-bold mt-3">Machine Learning Intern</h3>
+              <p class="mt-6 text-slate-300">Model optimization, quantization & edge deployment for real-time AI applications.</p>
             </div>
           </div>
         </div>
-
+        
         <!-- Intern 3 -->
-        <div class="grid grid-cols-12 gap-12 relative">
-          <div class="col-span-12 md:col-span-5">
+        <div class="grid grid-cols-2 gap-12 items-center">
+          <div class="text-right">
             <div class="glass p-8 rounded-3xl glass-card">
-              <div class="flex justify-between text-sm mb-6">
-                <span class="font-mono text-violet-400">ARCHTECHNOLOGIES</span>
-                <span class="text-gray-400">2023</span>
-              </div>
-              <h3 class="text-3xl font-semibold mb-3">AI Automation Intern</h3>
-              <p class="text-gray-300">Enterprise workflow automation pipelines</p>
+              <div class="font-mono text-violet-400 text-sm">ARCHTECHNOLOGIES + DEVELOPERS HUB • 2023-2024</div>
+              <h3 class="text-3xl font-bold mt-3">AI Automation & Full-Stack Intern</h3>
+              <p class="mt-6 text-slate-300">Enterprise automation pipelines, CRMS development & intelligent KYC systems.</p>
             </div>
           </div>
-          <div class="hidden md:block col-span-2 text-center">
-            <div class="w-8 h-8 rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-500 mx-auto mt-10"></div>
-          </div>
-          <div class="col-span-12 md:col-span-5 text-gray-400 text-lg leading-relaxed pt-12">
-            Designed intelligent agents using LangChain &amp; RPA tools for Fortune-500 clients.
+          <div class="flex justify-center">
+            <div class="timeline-dot w-6 h-6 bg-cyan-400 rounded-full"></div>
           </div>
         </div>
+      </div>
+      
+      <!-- Mobile Timeline -->
+      <div class="md:hidden space-y-12">
+        <div class="glass p-8 rounded-3xl glass-card">CodeAlpha + Syntacxhub • AI Intern 2024</div>
+        <div class="glass p-8 rounded-3xl glass-card">Hexsoftwares • ML Intern 2024</div>
+        <div class="glass p-8 rounded-3xl glass-card">Archtechnologies + Developers Hub • AI Automation Intern 2023-24</div>
       </div>
     </div>
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects" class="py-32 bg-gradient-to-b from-black to-zinc-950">
-    <div class="max-w-6xl mx-auto px-8">
-      <h2 class="text-6xl font-bold neon-text mb-16 text-center">PROJECT ARCHIVES</h2>
+  <section id="projects" class="py-28">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-6xl font-bold neon-violet text-center mb-16">PROJECT ARCHIVES</h2>
       
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Main Projects -->
+        <div class="glass rounded-3xl overflow-hidden glass-card">
+          <div class="h-60 bg-gradient-to-br from-violet-500/20 to-cyan-500/20 flex items-center justify-center text-8xl">🔐</div>
+          <div class="p-8">
+            <h3 class="text-2xl font-bold">Intelligent KYC Automation System</h3>
+            <p class="mt-4 text-slate-300 line-clamp-3">Security-first identity verification platform with OCR, AML screening & real-time automation.</p>
+            <a href="https://github.com/Muneebshah1192/Intelligent-KYC-Automation-System" target="_blank" class="mt-8 text-cyan-400 flex items-center gap-2 hover:text-white">VIEW ON GITHUB →</a>
+          </div>
+        </div>
         
-        <!-- Project 1 -->
-        <div class="glass rounded-3xl overflow-hidden glass-card group">
-          <div class="h-64 bg-zinc-900 flex items-center justify-center relative overflow-hidden">
-            <div class="text-8xl opacity-10 group-hover:scale-125 transition-transform">📸</div>
-            <div class="absolute inset-0 bg-gradient-to-br from-cyan-400/10 to-transparent"></div>
-            <div class="scan-line w-full"></div>
-          </div>
+        <div class="glass rounded-3xl overflow-hidden glass-card">
+          <div class="h-60 bg-gradient-to-br from-rose-500/20 to-cyan-500/20 flex items-center justify-center text-8xl">🎥</div>
           <div class="p-8">
-            <h3 class="text-2xl font-semibold mb-2">Intelligent KYC Automation</h3>
-            <p class="text-gray-400 mb-6">Real-time document verification + OCR + AML screening pipeline using computer vision.</p>
-            <a href="https://github.com/SyedMuneebHaiderShah/Intelligent-KYC-Automation" target="_blank" 
-               class="inline-flex items-center gap-2 text-cyan-400 hover:text-white transition-colors">
-              VIEW REPO <span class="text-xs">↗</span>
-            </a>
+            <h3 class="text-2xl font-bold">Movie Recommender System</h3>
+            <p class="mt-4 text-slate-300 line-clamp-3">Streamlit ML engine using TMDB API, collaborative filtering & beautiful film-strip UI.</p>
+            <a href="https://github.com/Muneebshah1192/movie-recommender-by-muneeb" target="_blank" class="mt-8 text-cyan-400 flex items-center gap-2 hover:text-white">VIEW ON GITHUB →</a>
           </div>
         </div>
-
-        <!-- Project 2 -->
-        <div class="glass rounded-3xl overflow-hidden glass-card group">
-          <div class="h-64 bg-zinc-900 flex items-center justify-center relative overflow-hidden">
-            <div class="text-7xl opacity-20">🔒</div>
-          </div>
+        
+        <div class="glass rounded-3xl overflow-hidden glass-card">
+          <div class="h-60 bg-gradient-to-br from-emerald-500/20 to-violet-500/20 flex items-center justify-center text-8xl">🩺</div>
           <div class="p-8">
-            <h3 class="text-2xl font-semibold mb-2">CRMS — Police Record Management System</h3>
-            <p class="text-gray-400 mb-6">Blockchain-secured digital evidence vault with AES-256 encryption and role-based access.</p>
-            <a href="https://github.com/SyedMuneebHaiderShah/CRMS-Police-Records" target="_blank" 
-               class="inline-flex items-center gap-2 text-cyan-400 hover:text-white transition-colors">
-              VIEW REPO <span class="text-xs">↗</span>
-            </a>
+            <h3 class="text-2xl font-bold">Medical Expert System</h3>
+            <p class="mt-4 text-slate-300 line-clamp-3">Rule-based diagnostic AI built during Syntacxhub internship using forward chaining logic.</p>
+            <a href="https://github.com/Muneebshah1192/Syntecxhub_Medical_Expert_System" target="_blank" class="mt-8 text-cyan-400 flex items-center gap-2 hover:text-white">VIEW ON GITHUB →</a>
           </div>
         </div>
+      </div>
+      
+      <!-- More Projects Accordion -->
+      <div class="mt-20">
+        <details class="group glass rounded-3xl p-8">
+          <summary class="flex justify-between items-center cursor-pointer text-2xl font-medium">
+            <span>More AI Creations</span>
+            <span class="text-4xl transition group-open:rotate-180">↓</span>
+          </summary>
+          <div class="grid md:grid-cols-2 gap-8 mt-10">
+            <div class="glass p-6 rounded-2xl glass-card">
+              <h4 class="font-bold text-xl">AI FAQ Chatbot (CodeAlpha)</h4>
+              <p class="text-sm mt-3 text-slate-400">Full-stack intelligent FAQ using custom NLP pipelines</p>
+              <a href="https://github.com/Muneebshah1192/CodeAlpha_FAQ_Chatbot_By_Muneeb" target="_blank" class="text-cyan-400 text-sm mt-6 block">GitHub →</a>
+            </div>
+            <div class="glass p-6 rounded-2xl glass-card">
+              <h4 class="font-bold text-xl">Criminal Record Management System</h4>
+              <p class="text-sm mt-3 text-slate-400">Secure PHP-based police database with admin & officer roles</p>
+              <a href="https://github.com/Muneebshah1192/Criminal-Record-Managment-System-" target="_blank" class="text-cyan-400 text-sm mt-6 block">GitHub →</a>
+            </div>
+            <div class="glass p-6 rounded-2xl glass-card">
+              <h4 class="font-bold text-xl">AI Translator</h4>
+              <p class="text-sm mt-3 text-slate-400">Real-time multilingual translation engine with neural networks</p>
+            </div>
+            <div class="glass p-6 rounded-2xl glass-card">
+              <h4 class="font-bold text-xl">AI Gesture Detector</h4>
+              <p class="text-sm mt-3 text-slate-400">Computer-vision hand gesture recognition using CNNs</p>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
 
-        <!-- Project 3 — Interactive Film Strip -->
-        <div class="glass rounded-3xl overflow-hidden glass-card group">
-          <div id="film-strip" class="h-64 bg-black flex items-center gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide px-6">
-            <div class="w-48 h-40 bg-gradient-to-br from-pink-500 to-violet-500 flex-shrink-0 snap-center rounded-2xl flex items-center justify-center text-6xl">🎥</div>
-            <div class="w-48 h-40 bg-gradient-to-br from-cyan-500 to-emerald-500 flex-shrink-0 snap-center rounded-2xl flex items-center justify-center text-6xl">📽️</div>
-            <div class="w-48 h-40 bg-gradient-to-br from-orange-500 to-red-500 flex-shrink-0 snap-center rounded-2xl flex items-center justify-center text-6xl">🌌</div>
-          </div>
-          <div class="p-8">
-            <h3 class="text-2xl font-semibold mb-2">Movie Recommender System</h3>
-            <p class="text-gray-400">Collaborative filtering engine with real-time horizontal film-strip UI (drag to explore).</p>
-            <a href="https://github.com/SyedMuneebHaiderShah/Movie-Recommender" target="_blank" 
-               class="inline-flex items-center gap-2 text-cyan-400 hover:text-white transition-colors mt-6">
-              VIEW REPO <span class="text-xs">↗</span>
-            </a>
-          </div>
+  <!-- SKILLS -->
+  <section id="skills" class="py-28 bg-slate-950">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-6xl font-bold neon-text text-center mb-20">NEURAL ARSENAL</h2>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <svg class="w-40 h-40 mx-auto" viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r="70" fill="none" stroke="#1e2937" stroke-width="18"/>
+            <circle cx="80" cy="80" r="70" fill="none" stroke="#00f3ff" stroke-width="18" stroke-dasharray="439" stroke-dashoffset="50" class="skill-ring"/>
+          </svg>
+          <p class="mt-6 font-medium text-xl">Python • 98%</p>
+        </div>
+        <div class="text-center">
+          <svg class="w-40 h-40 mx-auto" viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r="70" fill="none" stroke="#1e2937" stroke-width="18"/>
+            <circle cx="80" cy="80" r="70" fill="none" stroke="#c724ff" stroke-width="18" stroke-dasharray="439" stroke-dashoffset="70" class="skill-ring"/>
+          </svg>
+          <p class="mt-6 font-medium text-xl">Machine Learning • 95%</p>
+        </div>
+        <div class="text-center">
+          <svg class="w-40 h-40 mx-auto" viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r="70" fill="none" stroke="#1e2937" stroke-width="18"/>
+            <circle cx="80" cy="80" r="70" fill="none" stroke="#00f3ff" stroke-width="18" stroke-dasharray="439" stroke-dashoffset="35" class="skill-ring"/>
+          </svg>
+          <p class="mt-6 font-medium text-xl">AI Automation • 97%</p>
+        </div>
+        <div class="text-center">
+          <svg class="w-40 h-40 mx-auto" viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r="70" fill="none" stroke="#1e2937" stroke-width="18"/>
+            <circle cx="80" cy="80" r="70" fill="none" stroke="#c724ff" stroke-width="18" stroke-dasharray="439" stroke-dashoffset="80" class="skill-ring"/>
+          </svg>
+          <p class="mt-6 font-medium text-xl">Prompt Engineering • 94%</p>
+        </div>
+        <div class="text-center col-span-2 md:col-span-1">
+          <div class="glass p-8 rounded-3xl">Cybersecurity & Networking</div>
+        </div>
+        <div class="text-center col-span-2 md:col-span-1">
+          <div class="glass p-8 rounded-3xl">Deep Learning & CNNs</div>
+        </div>
+        <div class="text-center col-span-2 md:col-span-1">
+          <div class="glass p-8 rounded-3xl">Full-Stack (React + Flask)</div>
+        </div>
+        <div class="text-center col-span-2 md:col-span-1">
+          <div class="glass p-8 rounded-3xl">Agile & Project Management</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS MATRIX -->
-  <section id="skills" class="py-32 bg-black border-t border-b border-violet-500/10 relative">
-    <div class="max-w-5xl mx-auto px-8">
-      <h2 class="text-6xl font-bold neon-violet text-center mb-20">NEURAL CAPABILITIES</h2>
-      
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-10">
-        <div class="glass p-8 rounded-3xl">
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-3xl">🐍</span>
-            <span class="font-mono text-cyan-300">Python • 95%</span>
-          </div>
-          <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
-            <div id="bar-python" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-violet-400"></div>
-          </div>
-        </div>
-        
-        <div class="glass p-8 rounded-3xl">
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-3xl">🧠</span>
-            <span class="font-mono text-cyan-300">Machine Learning • 92%</span>
-          </div>
-          <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
-            <div id="bar-ml" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-violet-400"></div>
-          </div>
-        </div>
-        
-        <div class="glass p-8 rounded-3xl">
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-3xl">⚡</span>
-            <span class="font-mono text-cyan-300">AI Automation • 98%</span>
-          </div>
-          <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
-            <div id="bar-auto" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-violet-400"></div>
-          </div>
-        </div>
-        
-        <div class="glass p-8 rounded-3xl">
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-3xl">📜</span>
-            <span class="font-mono text-cyan-300">Prompt Engineering • 90%</span>
-          </div>
-          <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
-            <div id="bar-prompt" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-violet-400"></div>
-          </div>
-        </div>
-        
-        <div class="glass p-8 rounded-3xl">
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-3xl">🔐</span>
-            <span class="font-mono text-cyan-300">Cybersecurity • 85%</span>
-          </div>
-          <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
-            <div id="bar-cyber" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-violet-400"></div>
-          </div>
-        </div>
-        
-        <div class="glass p-8 rounded-3xl">
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-3xl">🌐</span>
-            <span class="font-mono text-cyan-300">Three.js / GSAP • 88%</span>
-          </div>
-          <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
-            <div id="bar-three" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-violet-400"></div>
-          </div>
-        </div>
+  <!-- CONTACT -->
+  <section id="contact" class="py-28 bg-gradient-to-b from-slate-950 to-black">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-6xl font-bold neon-text">TRANSMIT MESSAGE</h2>
+        <p class="text-slate-400 mt-4">Let's build something extraordinary together</p>
       </div>
-    </div>
-  </section>
-
-  <!-- CONTACT CLI -->
-  <section id="contact" class="py-32 bg-zinc-950">
-    <div class="max-w-2xl mx-auto px-8">
-      <div class="glass p-10 rounded-3xl">
-        <div class="flex items-center gap-3 mb-8 border-b border-cyan-400/30 pb-6">
-          <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-          <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-          <div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
-          <div class="font-mono text-xs ml-auto text-cyan-300">TERMINAL v1.3 • SYED@NEURAL</div>
+      
+      <div class="grid lg:grid-cols-5 gap-12">
+        <!-- Form -->
+        <div class="lg:col-span-3 glass p-10 rounded-3xl">
+          <form id="contact-form" class="space-y-8">
+            <div>
+              <label class="block text-cyan-400 font-mono mb-2">YOUR NAME / HANDLE</label>
+              <input type="text" id="name" class="terminal-input w-full text-2xl border-b border-cyan-400/50 pb-2" placeholder="Your name">
+            </div>
+            <div>
+              <label class="block text-cyan-400 font-mono mb-2">MESSAGE</label>
+              <textarea id="message" rows="5" class="terminal-input w-full text-2xl border-b border-cyan-400/50 resize-none" placeholder="Type your message..."></textarea>
+            </div>
+            <button type="submit" class="w-full py-6 bg-gradient-to-r from-cyan-400 to-violet-500 text-black font-bold text-xl rounded-3xl hover:brightness-110 transition">SEND TO NEURAL CORE →</button>
+          </form>
         </div>
         
-        <form id="contact-form" class="space-y-8 font-mono text-lg">
-          <div>
-            <label class="block text-cyan-400 mb-2">&gt; YOUR_HANDLE</label>
-            <input type="text" id="name" placeholder="guest@matrix" class="terminal-input w-full text-2xl">
-          </div>
-          <div>
-            <label class="block text-cyan-400 mb-2">&gt; TRANSMISSION_SUBJECT</label>
-            <input type="text" id="subject" placeholder="Opportunity / Collaboration" class="terminal-input w-full text-2xl">
-          </div>
-          <div>
-            <label class="block text-cyan-400 mb-2">&gt; MESSAGE_PAYLOAD</label>
-            <textarea id="message" rows="4" placeholder="Type your encrypted message here..." class="terminal-input w-full resize-none text-2xl"></textarea>
+        <!-- Contact Info + Map -->
+        <div class="lg:col-span-2 space-y-10">
+          <div class="glass p-8 rounded-3xl space-y-8">
+            <div>
+              <div class="text-cyan-400 text-sm font-mono">EMAIL</div>
+              <a href="mailto:muneebshah1192@gmail.com" class="text-2xl hover:text-cyan-400 transition">muneebshah1192@gmail.com</a>
+            </div>
+            <div>
+              <div class="text-cyan-400 text-sm font-mono">PHONE</div>
+              <a href="tel:+923140895219" class="text-2xl hover:text-cyan-400 transition">+92 314 0895219</a>
+            </div>
+            <div>
+              <div class="text-cyan-400 text-sm font-mono">LOCATION</div>
+              <div class="text-2xl">Chakwal, Pakistan</div>
+            </div>
           </div>
           
-          <button type="submit" 
-                  class="w-full py-6 bg-gradient-to-r from-cyan-400 to-violet-500 text-black font-bold text-xl tracking-widest hover:brightness-110 transition-all rounded-2xl">
-            TRANSMIT TO ARCHIVES →
-          </button>
-        </form>
+          <!-- Embedded Map -->
+          <div class="glass rounded-3xl overflow-hidden">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.5!2d72.853!3d32.932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38df9b8f8f8f8f8f%3A0x123456!5e0!3m2!1sen!2spk!4v1700000000000" width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="py-24 border-t border-cyan-500/10 bg-black">
-    <div class="max-w-5xl mx-auto px-8 text-center">
-      <div class="text-4xl neon-text mb-6">"LET'S BUILD THE FUTURE"</div>
-      <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" 
-              class="px-16 py-7 text-2xl border-2 border-violet-400 hover:bg-violet-400 hover:text-black transition-all rounded-3xl font-medium tracking-wider">
-        HIRE ME
-      </button>
-      
-      <div class="mt-20 text-xs font-mono text-gray-500">
-        SYED MUNEEB HAIDER SHAH • CHAKWAL, PAKISTAN • 2025
-      </div>
+  <footer class="py-20 border-t border-cyan-400/10 bg-black">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <div class="text-5xl neon-text mb-8">"LET'S ARCHITECT THE FUTURE"</div>
+      <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="px-16 py-7 border-2 border-violet-400 text-2xl font-medium hover:bg-violet-400 hover:text-black transition rounded-3xl">HIRE ME</button>
+      <div class="mt-16 text-xs font-mono text-slate-500">SYED MUNEEB HAIDER SHAH • UNIVERSITY OF CHAKWAL • 2025</div>
     </div>
   </footer>
 
   <script>
-    // Tailwind config
+    // Tailwind ready
     tailwind.config = { content: [], theme: { extend: {} } }
-
-    // GSAP + ScrollTrigger registration
     gsap.registerPlugin(ScrollTrigger)
 
-    // ====================== TYPEWRITER ======================
-    function initTypewriter() {
-      const roles = ["Aspiring AI Engineer", "Automation Specialist", "Cybersecurity Researcher"]
-      let index = 0
-      const el = document.getElementById("typewriter")
-      
+    // Typewriter
+    function typewriter() {
+      const roles = ["AI Automation Engineer", "Machine Learning Specialist", "Full-Stack Developer"];
+      let i = 0;
+      const el = document.getElementById("typewriter");
       function type() {
-        el.textContent = ""
-        let pos = 0
-        const current = roles[index]
-        
-        const typing = setInterval(() => {
-          if (pos < current.length) {
-            el.textContent += current[pos]
-            pos++
+        el.textContent = "";
+        let j = 0;
+        const interval = setInterval(() => {
+          if (j < roles[i].length) {
+            el.textContent += roles[i][j++];
           } else {
-            clearInterval(typing)
-            setTimeout(() => {
-              index = (index + 1) % roles.length
-              type()
-            }, 2200)
+            clearInterval(interval);
+            setTimeout(() => { i = (i + 1) % roles.length; type(); }, 1800);
           }
-        }, 65)
+        }, 70);
       }
-      type()
+      type();
     }
 
-    // ====================== THREE.JS NEURAL NETWORK ======================
-    let scene, camera, renderer, particles = [], connections = []
-    let mouseX = 0, mouseY = 0
-
-    function initThree() {
-      const container = document.getElementById("three-container")
+    // Three.js Neural Background
+    let scene, camera, renderer, particles = [];
+    function initNeuralBackground() {
+      const container = document.createElement("div");
+      container.style.position = "absolute";
+      container.style.inset = "0";
+      container.style.zIndex = "0";
+      document.getElementById("neural-bg").appendChild(container);
       
-      scene = new THREE.Scene()
-      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
-      renderer.setSize(window.innerWidth, window.innerHeight)
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-      container.appendChild(renderer.domElement)
-
-      // Particles (neural nodes)
-      const particleCount = 180
-      const geo = new THREE.SphereGeometry(0.18, 8, 8)
-      const mat = new THREE.MeshBasicMaterial({ color: 0x00f3ff, transparent: true, opacity: 0.85 })
-
-      for (let i = 0; i < particleCount; i++) {
-        const p = new THREE.Mesh(geo, mat.clone())
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+      renderer = new THREE.WebGLRenderer({ alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(renderer.domElement);
+      
+      const geometry = new THREE.SphereGeometry(0.3, 8, 8);
+      const material = new THREE.MeshBasicMaterial({ color: 0x00f3ff });
+      
+      for (let i = 0; i < 220; i++) {
+        const p = new THREE.Mesh(geometry, material);
         p.position.set(
-          (Math.random() - 0.5) * 90,
-          (Math.random() - 0.5) * 55,
-          (Math.random() - 0.5) * 30
-        )
-        p.userData = {
-          vx: (Math.random() - 0.5) * 0.015,
-          vy: (Math.random() - 0.5) * 0.015
-        }
-        scene.add(p)
-        particles.push(p)
+          Math.random() * 120 - 60,
+          Math.random() * 80 - 40,
+          Math.random() * 40 - 20
+        );
+        scene.add(p);
+        particles.push(p);
       }
-
-      // Central holographic core (drone/neural hub)
-      const coreGeo = new THREE.TorusKnotGeometry(3.5, 1.2, 128, 32)
-      const coreMat = new THREE.MeshPhongMaterial({
-        color: 0xc724ff,
-        emissive: 0x9F00FF,
-        shininess: 100,
-        transparent: true,
-        opacity: 0.7
-      })
-      const core = new THREE.Mesh(coreGeo, coreMat)
-      scene.add(core)
-
-      camera.position.z = 45
-
-      // Mouse
-      document.addEventListener("mousemove", e => {
-        mouseX = (e.clientX / window.innerWidth) * 2 - 1
-        mouseY = -(e.clientY / window.innerHeight) * 2 + 1
-      })
-
-      // Animation loop
+      
+      camera.position.z = 70;
+      
       function animate() {
-        requestAnimationFrame(animate)
-
-        // Update particles
-        particles.forEach(p => {
-          p.position.x += p.userData.vx
-          p.position.y += p.userData.vy
-          
-          // Mouse attraction
-          p.position.x += (mouseX * 18 - p.position.x) * 0.003
-          p.position.y += (mouseY * 14 - p.position.y) * 0.003
-          
-          // Wrap
-          if (Math.abs(p.position.x) > 48) p.userData.vx *= -1
-          if (Math.abs(p.position.y) > 32) p.userData.vy *= -1
-        })
-
-        // Core rotation + subtle bob
-        core.rotation.x += 0.008
-        core.rotation.y += 0.012
-        core.position.y = Math.sin(Date.now() / 800) * 1.5
-
-        updateConnections()
-        renderer.render(scene, camera)
+        requestAnimationFrame(animate);
+        particles.forEach(p => p.rotation.y += 0.01);
+        renderer.render(scene, camera);
       }
-      animate()
-
-      // Resize
+      animate();
+      
       window.addEventListener("resize", () => {
-        camera.aspect = window.innerWidth / window.innerHeight
-        camera.updateProjectionMatrix()
-        renderer.setSize(window.innerWidth, window.innerHeight)
-      })
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
     }
 
-    function updateConnections() {
-      connections.forEach(line => scene.remove(line))
-      connections = []
-
-      const lineMat = new THREE.LineBasicMaterial({ color: 0x00f3ff, transparent: true, opacity: 0.12 })
-
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].position.x - particles[j].position.x
-          const dy = particles[i].position.y - particles[j].position.y
-          const distance = Math.hypot(dx, dy)
-          
-          if (distance < 14) {
-            const points = [particles[i].position.clone(), particles[j].position.clone()]
-            const lineGeo = new THREE.BufferGeometry().setFromPoints(points)
-            const line = new THREE.Line(lineGeo, lineMat)
-            scene.add(line)
-            connections.push(line)
-          }
-        }
+    // 3D Floating Robot
+    let robotScene, robotCamera, robotRenderer, robotGroup;
+    function initRobot() {
+      const container = document.getElementById("robot-container");
+      robotScene = new THREE.Scene();
+      robotCamera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+      robotRenderer = new THREE.WebGLRenderer({ alpha: true });
+      robotRenderer.setSize(280, 380);
+      container.appendChild(robotRenderer.domElement);
+      
+      robotGroup = new THREE.Group();
+      robotScene.add(robotGroup);
+      
+      // Head
+      const head = new THREE.Mesh(new THREE.BoxGeometry(2.5, 2.5, 2.5), new THREE.MeshPhongMaterial({ color: 0x00f3ff, emissive: 0x00f3ff, shininess: 100 }));
+      head.position.y = 6;
+      robotGroup.add(head);
+      
+      // Body
+      const body = new THREE.Mesh(new THREE.BoxGeometry(3.8, 5, 2.8), new THREE.MeshPhongMaterial({ color: 0x1e2937 }));
+      body.position.y = 2;
+      robotGroup.add(body);
+      
+      // Arms
+      const armMat = new THREE.MeshPhongMaterial({ color: 0xc724ff });
+      const leftArm = new THREE.Mesh(new THREE.BoxGeometry(1, 4, 1), armMat);
+      leftArm.position.set(-3, 2, 0);
+      robotGroup.add(leftArm);
+      const rightArm = leftArm.clone();
+      rightArm.position.x = 3;
+      robotGroup.add(rightArm);
+      
+      // Legs
+      const legMat = new THREE.MeshPhongMaterial({ color: 0x334155 });
+      const leftLeg = new THREE.Mesh(new THREE.BoxGeometry(1.2, 4, 1.2), legMat);
+      leftLeg.position.set(-1.2, -3, 0);
+      robotGroup.add(leftLeg);
+      const rightLeg = leftLeg.clone();
+      rightLeg.position.x = 1.2;
+      robotGroup.add(rightLeg);
+      
+      robotCamera.position.set(0, 4, 18);
+      robotCamera.lookAt(0, 2, 0);
+      
+      // Light
+      const light = new THREE.PointLight(0xffffff, 2);
+      light.position.set(10, 15, 20);
+      robotScene.add(light);
+      
+      function animateRobot() {
+        requestAnimationFrame(animateRobot);
+        robotGroup.rotation.y = Math.sin(Date.now() / 1200) * 0.2;
+        robotRenderer.render(robotScene, robotCamera);
       }
-    }
-
-    // ====================== SCROLL-LINKED FLYING EFFECT ======================
-    function initScrollAnimations() {
-      // Camera flies forward as user scrolls
-      gsap.to(camera.position, {
-        z: 85,
-        ease: "none",
+      animateRobot();
+      
+      // Scroll movement
+      gsap.to(robotGroup.position, {
+        y: -18,
         scrollTrigger: {
           trigger: "body",
           start: "top top",
           end: "bottom bottom",
-          scrub: 1.2
+          scrub: 1.5
         }
-      })
-
-      // Skills progress bars
-      gsap.to("#bar-python", { width: "95%", duration: 1.8, scrollTrigger: { trigger: "#skills", start: "top 70%" } })
-      gsap.to("#bar-ml", { width: "92%", duration: 1.8, scrollTrigger: { trigger: "#skills", start: "top 70%" } })
-      gsap.to("#bar-auto", { width: "98%", duration: 1.8, scrollTrigger: { trigger: "#skills", start: "top 70%" } })
-      gsap.to("#bar-prompt", { width: "90%", duration: 1.8, scrollTrigger: { trigger: "#skills", start: "top 70%" } })
-      gsap.to("#bar-cyber", { width: "85%", duration: 1.8, scrollTrigger: { trigger: "#skills", start: "top 70%" } })
-      gsap.to("#bar-three", { width: "88%", duration: 1.8, scrollTrigger: { trigger: "#skills", start: "top 70%" } })
-
-      // Card glow follow mouse (dynamic)
-      document.querySelectorAll(".glass-card").forEach(card => {
-        card.addEventListener("mousemove", e => {
-          const rect = card.getBoundingClientRect()
-          const x = ((e.clientX - rect.left) / rect.width) * 100
-          const y = ((e.clientY - rect.top) / rect.height) * 100
-          card.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(0,243,255,0.12), transparent 70%)`
-        })
-        card.addEventListener("mouseleave", () => {
-          card.style.background = ""
-        })
-      })
+      });
     }
 
-    // ====================== CONTACT FORM ======================
-    function initContactForm() {
-      const form = document.getElementById("contact-form")
-      form.addEventListener("submit", e => {
-        e.preventDefault()
-        const msg = document.getElementById("message").value || "Hello from the matrix!"
-        
-        const success = document.createElement("div")
-        success.className = "fixed bottom-8 right-8 glass px-8 py-4 rounded-2xl text-emerald-400 font-mono text-sm flex items-center gap-3 shadow-2xl"
-        success.innerHTML = `✅ TRANSMISSION SUCCESSFUL<br><span class="text-xs text-gray-400">Message received in Chakwal neural core</span>`
-        document.body.appendChild(success)
-        
-        setTimeout(() => success.remove(), 3200)
-        form.reset()
-      })
+    // Scroll animations & skills rings
+    function initScroll() {
+      gsap.utils.toArray(".skill-ring").forEach((ring, i) => {
+        const dash = [439, 50, 70, 35, 80][i % 5] || 60;
+        gsap.to(ring, {
+          attr: { "stroke-dashoffset": dash },
+          duration: 2.5,
+          scrollTrigger: { trigger: "#skills", start: "top 70%" }
+        });
+      });
     }
 
-    // ====================== INITIALIZE EVERYTHING ======================
-    function initializePortfolio() {
-      // Tailwind ready
-      initTypewriter()
-      initThree()
-      initScrollAnimations()
-      initContactForm()
+    // Contact form
+    function initForm() {
+      document.getElementById("contact-form").addEventListener("submit", e => {
+        e.preventDefault();
+        const success = document.createElement("div");
+        success.className = "fixed bottom-10 right-10 glass px-10 py-6 rounded-3xl text-emerald-400 text-lg flex items-center gap-4 shadow-2xl";
+        success.innerHTML = `✅ TRANSMISSION RECEIVED<br><span class="text-xs">We'll connect soon from Chakwal</span>`;
+        document.body.appendChild(success);
+        setTimeout(() => success.remove(), 4000);
+        e.target.reset();
+      });
+    }
+
+    // Initialize everything
+    function launchPortfolio() {
+      typewriter();
+      initNeuralBackground();
+      initRobot();
+      initScroll();
+      initForm();
       
-      // Extra scroll hint on load
-      console.log('%c🚀 Welcome to the Neural Portfolio of Syed Muneeb Haider Shah', 'color:#00f3ff; font-family:monospace')
+      console.log("%c🚀 SYED MUNEEB HAIDER SHAH PORTFOLIO v2.0 LOADED", "color:#00f3ff; font-size:13px; font-family:monospace");
     }
 
-    window.onload = initializePortfolio
+    window.onload = launchPortfolio;
   </script>
 </body>
 </html>
+```
